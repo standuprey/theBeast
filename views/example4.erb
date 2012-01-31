@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>jsmodules - example 4</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.min.js"></script>
+    <script src="jsmodules.js" type="text/javascript"></script>
+    <script>
+      JSMODULES.add({
+        calledModule: function(){
+          return {
+            onDisplay: function(msg){
+              console.log("received topic!");
+              $("[data-jsModules='calledModule']").text("my div got this message: "+msg);
+            }
+          }
+        },
+        calledModuleBis: function(){
+          return {
+            onDisplay: function(msg){
+              console.log("received topic!");
+              $("[data-jsModules='calledModuleBis']").text("my (other) div got this message: "+msg);
+            }
+          }
+        },
+        caller: function(){
+          $("[data-jsModules='caller']").click(function(){
+            console.log("publishing topic...");
+            JSMODULES.publish("display", "hello world");
+            $(this).attr("disabled", "disabled").text("DONE");
+          });
+        }
+      });
+    </script>
+    <style>
+      body { background-color: #ddd; color: #222; font-family: Arial; padding: 0; margin: 0; }
+      #content { padding: 20px; }
+      h1 { color: #ccff77; background-color: #222222; padding: 20px; margin: 0; }
+      h2, h3 { color: #308; }
+      a { color: #004; }
+      [data-jsModules] { padding: 10px; margin: 10px 0; background-color: #eee; width: 50%; text-align: center; }
+    </style>
+  </head>
+  <body>
+    <h1>JSMODULES example 4: communication between modules</h1>
+    <div id="content">
+      <p>Another thing that is embedded into JSMODULES is a special implementation of pubsub. What it does is that you can call any public function (receiver) from another module or from multiple modules. You can give parameter, but there is no return value, because you should not assume that another module will catch the call, but maybe more than one will be called. The public functions from a module are the ones enclosed in the returned object. 'executeAnyway' is a public function that can also be called from another module. But I have no idea if that can be useful... Also, nobody is preventing you from calling a public function directly from another module: <code>JSMODULES.modules.myModule.myPrivateFunction()</code>. But that creates dependencies, which makes your modules harder to understand and less independent and reusable. Let's find a more concrete example.</p>
+      <p>To avoid confusion between public functions and receivers? Receivers start with "on". So if the topic is "display", the modules who want to subscribe to this topic need to implement a function called "onDisplay".
+      <h2>Calling another module's public function</h2>
+      <p>You'll simply have to call it this way:</p>
+      <code>JSMODULES.publish("topic", obj);</code>
+      <p>Where topic is the name of the public function, and obj is an argument that will be passed to the function. Let's create 3 modules. 2 implementing a function (or topic) 'display'. And another one calling this function</p>
+      <code>
+JSMODULES.add({<br/>
+<strong>calledModule</strong>: function(){<br/>
+&nbsp;return {<br/>
+&nbsp;&nbsp;<em>onDisplay</em>: function(msg){<br/>
+&nbsp;&nbsp;&nbsp;console.log("received topic!");<br/>
+&nbsp;&nbsp;&nbsp;$("[data-jsModules='calledModule']").text("my div got this message: "+msg);<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;}<br/>
+},<br/>
+<strong>calledModuleBis</strong>: function(){<br/>
+&nbsp;return {<br/>
+&nbsp;&nbsp;<em>onDisplay</em>: function(msg){<br/>
+&nbsp;&nbsp;&nbsp;console.log("received topic!");<br/>
+&nbsp;&nbsp;&nbsp;$("[data-jsModules='calledModuleBis']").text("my (other) div got this message: "+msg);<br/>
+&nbsp;&nbsp;}<br/>
+&nbsp;}<br/>
+},<br/>
+<strong>caller</strong>: function(){<br/>
+&nbsp;$("[data-jsModules='caller']").click(function(){<br/>
+&nbsp;&nbsp;console.log("publishing topic...");<br/>
+&nbsp;&nbsp;<em>JSMODULES.publish("display", "hello world");</em><br/>
+&nbsp;&nbsp;$(this).attr("disabled", "disabled").text("DONE");<br/>
+&nbsp;});<br/>
+}<br/>
+});<br/>
+      </code><br/>
+      <button data-jsModules="caller">DO IT!</button><br/>
+      <div data-jsModules="calledModule">Waiting for a message...</div>
+      <div data-jsModules="calledModuleBis">me too...</div>
+      <a href="/example3">&lt;&lt; previous</a>&nbsp;&nbsp;|&nbsp;
+      <a href="/example5">next &gt;&gt;</a>
+    </div>
+  </body>
+</html>
