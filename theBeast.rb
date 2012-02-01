@@ -2,7 +2,7 @@
 require 'rubygems'
 require 'sinatra'
 
-@@page_count = 5
+set :page_count, 5
 
 get '/' do
   erb :example1

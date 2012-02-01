@@ -81,7 +81,7 @@
       <div data-theBeast="fadeIn1">This is the div that fades in and out!</div>
       <div data-theBeast="fadeIn2">This is another div that fades in and out!</div>
       <a href="/">&lt;&lt; previous</a>&nbsp;
-      <% (1..@@page_count).each do |page_number| %><a href="/example<%= page_number %>"><%= page_number %></a>&nbsp;<% end %>
+      <% (1..settings.page_count).each do |page_number| %><a href="/example<%= page_number %>"><%= page_number %></a>&nbsp;<% end %>
       <a href="/example3">next &gt;&gt;</a>
     </div>
   </body>

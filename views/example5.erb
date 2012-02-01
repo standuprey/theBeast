@@ -86,7 +86,7 @@
       </ul>
       <br/>
       <a href="/example4">&lt;&lt; previous</a>
-      <% (1..@@page_count).each do |page_number| %><a href="/example<%= page_number %>"><%= page_number %></a>&nbsp;<% end %>
+      <% (1..settings.page_count).each do |page_number| %><a href="/example<%= page_number %>"><%= page_number %></a>&nbsp;<% end %>
     </div>
   </body>
 </html>

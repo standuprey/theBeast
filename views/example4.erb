@@ -80,7 +80,7 @@ theBeast.add({<br/>
       <div data-theBeast="calledModule">Waiting for a message...</div>
       <div data-theBeast="calledModuleBis">me too...</div>
       <a href="/example3">&lt;&lt; previous</a>&nbsp;
-      <% (1..@@page_count).each do |page_number| %><a href="/example<%= page_number %>"><%= page_number %></a>&nbsp;<% end %>
+      <% (1..settings.page_count).each do |page_number| %><a href="/example<%= page_number %>"><%= page_number %></a>&nbsp;<% end %>
       <a href="/example5">next &gt;&gt;</a>
     </div>
   </body>

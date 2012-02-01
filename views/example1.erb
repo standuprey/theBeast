@@ -65,7 +65,7 @@
         <li><strong>Readability</strong>: HTML and javascript are now visibly linked. The whole remains unobtrusive.</li>
         <li><strong>Code Reuse</strong>: One module can be called on any page you want. So you can have only one big js file, and pick the modules you want</li>
       </ul>
-      <% (1..@@page_count).each do |page_number| %><a href="/example<%= page_number %>"><%= page_number %></a>&nbsp;<% end %>
+      <% (1..settings.page_count).each do |page_number| %><a href="/example<%= page_number %>"><%= page_number %></a>&nbsp;<% end %>
       <a href="/example2">next &gt;&gt;</a>
     </div>
   </body>
