@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>jsmodules - example 5</title>
+    <title>theBeast - example 5</title>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.min.js"></script>
-    <script src="jsmodules.js" type="text/javascript"></script>
-    <script src="jsmodules.history.js" type="text/javascript"></script>
+    <script src="theBeast.js" type="text/javascript"></script>
+    <script src="theBeast.history.js" type="text/javascript"></script>
     <style>
       body { background-color: #ddd; color: #222; font-family: Arial; padding: 0; margin: 0; }
       #content { padding: 20px; }
@@ -18,20 +18,14 @@
       #demo>div { width: 136px; height: 52px; float: left; margin-left: 10px; }
     </style>
   </head>
-  <body data-jsModules="history">
-    <h1>JSMODULES example 5: the history module</h1>
+  <body data-theBeast="history">
+    <h1>theBeast example 5: the history module</h1>
     <div id="content">
-      <p>The first ready to use module. It uses HTML5 history and jQuery.load to allow the user to load parts of the web page and make it work together with the browser's history. This could typically be a simple js file. So what are the benefits to put it as a jsModules?</p>
+      <p>The first ready to use module. It uses HTML5 history and jQuery.load to allow the user to load parts of the web page and make it work together with the browser's history. This could typically be a simple js file. So what are the benefits to put it as a theBeast?</p>
       <ul>
         <li>You don't add any variable to the global namespace</li>
         <li>You have the same stucture for every piece of javascript on your website</li>
-        <li>It uses JSMODULES pubsub, better than a simple callback</li>
-      </ul>
-      <h2>History module's API</h2>
-      <p>You need to load the file jsmodules.history.js and its dependencies: jsmodules.css and part-loader.png. Then you add data-jsModule="history", preferably to the body. This way, looking at the DOM, already gives you an indication about what the js is using. This module has a couple of public functions which you can call directly (you need to prefix them with JSMODULES.modules.history):</p>
-      <ul>
-        <li><strong>load(url, mainEl)</strong>: load mainEl of the page located at the url into mainEl of the current page and registers this into the browser history. This is the main function of this module. It works a little bit like jQuery.load (and uses it), but adds the HTML5 history to it. Also, the mainEl is the same in the current page than in the remote page. Which makes the function a little less versatile, but very straightforward to use.</li>
-        <li><strong>reload(mainEl)</strong>: Reload the mainEl of the current page</li>
+        <li>It uses theBeast pubsub, better than a simple callback</li>
       </ul>
       <h2>History module basic usage and example</h2>
       <p>You might not even need to call this functions, if you want a link to only update a part of the page, just put the attribute <code>data-remote="<em>selector</em>"</code>, where <em>selector</em> can be any jQuery selector, like "#content" for instance.</p>
@@ -56,8 +50,43 @@
           <div class="square" <% if params[:square3] %>style="background-color:#<%= params[:square3] %>"<% end %>></div>
         </div>
       </div>
+      <p>In this example, you can change the color of the boxes, an ajax call will be performed to retrieve the part of HTML corresponding to the box with the given color. You can then hit the back/next button of your browser, to navigate into the changes you made. This does not require to write ANY javascript. You just add the history theBeast module to be set on the BODY tag.</p>
+      <p>Here is the HTML source for the section with the boxes. Note that I used some ruby here to determine the color of the box on the server side. But it's just an example. What happens the servers answers is totally up to you!</p>
+      <code>
+&lt;body data-theBeast=&quot;history&quot;&gt;<br/>
+...<br/>
+&lt;div id=&quot;demo&quot;&gt;<br/>
+&nbsp;&lt;div class=&quot;square-1&quot;&gt;<br/>
+&nbsp;&nbsp;&lt;a href=&quot;?square1=00f&quot; data-remote=&quot;.square-1&quot;&gt;blue&lt;/a&gt;<br/>
+&nbsp;&nbsp;&lt;a href=&quot;?square1=f00&quot; data-remote=&quot;.square-1&quot;&gt;red&lt;/a&gt;<br/>
+&nbsp;&nbsp;&lt;a href=&quot;?square1=0f0&quot; data-remote=&quot;.square-1&quot;&gt;green&lt;/a&gt;<br/>
+&nbsp;&nbsp;&lt;div class=&quot;square&quot; &lt;% if params[:square1] %&gt;style=&quot;background-color:#&lt;%= params[:square1] %&gt;&quot;&lt;% end %&gt;&gt;&lt;/div&gt;<br/>
+&nbsp;&lt;/div&gt;<br/>
+&nbsp;&lt;div class=&quot;square-2&quot;&gt;<br/>
+&nbsp;&nbsp;&lt;a href=&quot;?square2=00f&quot; data-remote=&quot;.square-2&quot;&gt;blue&lt;/a&gt;<br/>
+&nbsp;&nbsp;&lt;a href=&quot;?square2=f00&quot; data-remote=&quot;.square-2&quot;&gt;red&lt;/a&gt;<br/>
+&nbsp;&nbsp;&lt;a href=&quot;?square2=0f0&quot; data-remote=&quot;.square-2&quot;&gt;green&lt;/a&gt;<br/>
+&nbsp;&nbsp;&lt;div class=&quot;square&quot; &lt;% if params[:square2] %&gt;style=&quot;background-color:#&lt;%= params[:square2] %&gt;&quot;&lt;% end %&gt;&gt;&lt;/div&gt;<br/>
+&nbsp;&lt;/div&gt;<br/>
+&nbsp;&lt;div class=&quot;square-3&quot;&gt;<br/>
+&nbsp;&nbsp;&lt;a href=&quot;?square3=00f&quot; data-remote=&quot;.square-3&quot;&gt;blue&lt;/a&gt;<br/>
+&nbsp;&nbsp;&lt;a href=&quot;?square3=f00&quot; data-remote=&quot;.square-3&quot;&gt;red&lt;/a&gt;<br/>
+&nbsp;&nbsp;&lt;a href=&quot;?square3=0f0&quot; data-remote=&quot;.square-3&quot;&gt;green&lt;/a&gt;<br/>
+&nbsp;&nbsp;&lt;div class=&quot;square&quot; &lt;% if params[:square3] %&gt;style=&quot;background-color:#&lt;%= params[:square3] %&gt;&quot;&lt;% end %&gt;&gt;&lt;/div&gt;<br/>
+&nbsp;&lt;/div&gt;<br/>
+&lt;/div&gt;<br/>
+...<br/>
+&lt;/body&gt;<br/>
+    </code>
+      <h2>History module's API</h2>
+      <p>You need to load the file theBeast.history.js and its dependencies: theBeast.css and part-loader.png. Then you add data-jsModule="history", preferably to the body. This way, looking at the DOM, already gives you an indication about what the js is using. This module has a couple of public functions which you can call directly (you need to prefix them with theBeast.modules.history):</p>
+      <ul>
+        <li><strong>load(url, mainEl)</strong>: load mainEl of the page located at the url into mainEl of the current page and registers this into the browser history. This is the main function of this module. It works a little bit like jQuery.load (and uses it), but adds the HTML5 history to it. Also, the mainEl is the same in the current page than in the remote page. Which makes the function a little less versatile, but very straightforward to use.</li>
+        <li><strong>reload(mainEl)</strong>: Reload the mainEl of the current page</li>
+      </ul>
       <br/>
       <a href="/example4">&lt;&lt; previous</a>
+      <% (1..@@page_count).each do |page_number| %><a href="/example<%= page_number %>"><%= page_number %></a>&nbsp;<% end %>
     </div>
   </body>
 </html>

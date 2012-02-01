@@ -1,2 +1,2 @@
-require './jsmodules'
+require './theBeast'
 run Sinatra::Application

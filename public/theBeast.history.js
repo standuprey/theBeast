@@ -1,4 +1,4 @@
-JSMODULES.add({
+theBeast.add({
   history: function() {
     function mergeParams(currentParams, newParams) {
       for (var i=0, len=newParams.length; i<len; i++) {
@@ -27,41 +27,52 @@ JSMODULES.add({
         return link;
       }
     }
-    function loader(link, mainEl) {
-      var $mainEl, callback;
-      $mainEl = $(mainEl);
-      $mainEl.html("<div class='part-loader'></div>");
+    function loader(link, element) {
+      var $element, callback;
+      $element = $(element);
+      $element.html("<div class='part-loader'></div>");
       callback = arguments[2];
-      $mainEl.load(link + " " + mainEl + ">*", function() {
-        $mainEl.fadeIn(500);
-        JSMODULES.load();
-        JSMODULES.publish("loaded");
+      $element.load(link + " " + element + ">*", function() {
+        $element.fadeIn(500);
+        theBeast.load();
+        theBeast.publish("loaded");
       });
     }
     if (history && history.pushState) {
       $("a[data-remote]").live("click", function(e) {
-        JSMODULES.modules.history.load(this.href, $(this).attr("data-remote"));
+        theBeast.modules.history.load(this.href, $(this).attr("data-remote"));
         return false;
       });
       $(window).bind("popstate", function(e) {
-        console.log(e.originalEvent);
-        if (e.originalEvent.state && e.originalEvent.state.ajax) {
-          link = checkLinkHasDomain(location.href);
-          loader(link, "#content");
+        if (e.originalEvent.state) {
+          if (e.originalEvent.state.ajax) {
+            link = checkLinkHasDomain(location.href);
+            loader(link, "#content");
+          } else if (e.originalEvent.state.reload) {
+            window.location.reload();
+          }
         }
       });
+      history.replaceState({
+        reload: true
+      }, document.title, location.href);
     }
     return {
       getCurrentPage: function() {
         return getCurrentPage(location.href);
       },
-      load: function(link, mainEl) {
+      load: function(link, element, title) {
+        if (!typeof link === "string") {
+          console.error("theBeast.load: link parameter is not a string");
+          return;
+        }
+        if (!typeof title === "string") title = link;
         link = checkLinkHasDomain(link);
         if (history && history.pushState) {
           history.pushState({
             ajax: true
-          }, link, link);
-          return loader(link, mainEl);
+          }, title, link);
+          return loader(link, element);
         } else {
           return window.location.href = link;
         }

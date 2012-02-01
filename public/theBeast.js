@@ -1,4 +1,4 @@
-var JSMODULES = JSMODULES || (function(){
+var theBeast = theBeast || (function(){
   // pubsub
   var cache = {};
   function subscribe(module){
@@ -42,16 +42,16 @@ var JSMODULES = JSMODULES || (function(){
       }
     },
     load: function(){
-      $("[data-jsmodules]").each(function(){
+      $("[data-theBeast]").each(function(){
         var $this = $(this);
-        var moduleNames = $this.attr("data-jsmodules").split(",");
+        var moduleNames = $this.attr("data-theBeast").split(",");
         for(var i=0, len = moduleNames.length; i<len; i++) {
           var moduleName = moduleNames[i].replace(/^\s+|\s+$/g, ''); 
-          if (JSMODULES.modules[moduleName] === undefined && modules[moduleName] != undefined) {
-            JSMODULES.modules[moduleName] = modules[moduleName]() || true;
-            subscribe(JSMODULES.modules[moduleName]);
+          if (theBeast.modules[moduleName] === undefined && modules[moduleName] != undefined) {
+            theBeast.modules[moduleName] = modules[moduleName]() || true;
+            subscribe(theBeast.modules[moduleName]);
           }
-          var currentModule = JSMODULES.modules[moduleName];
+          var currentModule = theBeast.modules[moduleName];
           if (typeof currentModule === "object" && typeof currentModule.executeAnyway === "function")
             currentModule.executeAnyway.call($this);
         }
@@ -61,5 +61,5 @@ var JSMODULES = JSMODULES || (function(){
 })()
 
 $(document).ready(function(){
-  JSMODULES.load();
+  theBeast.load();
 });
