@@ -4,10 +4,12 @@
     <title>theBeast - example 1</title>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.min.js"></script>
     <script src="/theBeast.js" type="text/javascript"></script>
+    <link media="screen" rel="stylesheet" href="site.css" type="text/css">
     <script>
       theBeast.add({
         fadeIn: function(){
           console.log("loading fadein module");
+          $('[data-theBeast="fadeIn"]').hide();
           $("#example-1").click(function(){
             $('[data-theBeast="fadeIn"]').fadeIn(500, function(){
               var $this = $(this);
@@ -16,20 +18,12 @@
         }
       });
     </script>
-    <style>
-      body { background-color: #ddd; color: #222; font-family: Arial; padding: 0; margin: 0; }
-      #content { padding: 20px; }
-      h1 { color: #ccff77; background-color: #222222; padding: 20px; margin: 0; }
-      h2, h3 { color: #308; }
-      a { color: #004; }
-      [data-theBeast] { display: none; padding: 10px; margin: 10px 0; background-color: #eee; width: 50%; text-align: center; }
-      p { display: block; }
-    </style>
   </head>
   <body>
     <h1>theBeast example 1: module declaration</h1>
+    <div class="download"><a href="theBeast.js">theBeast.js</a>&nbsp;|&nbsp;<a href="theBeast.min.js">theBeast.min.js</a></div>
     <div id="content">
-      <p>theBeast is a mini-framework that lets you organize your javascript in modules, have them speak to each other and linked to the dom, greatly improving maintainability.</p>
+      <p>theBeast is a mini-framework (1.5 KB minified) that lets you organize your javascript in modules, have them speak to each other and linked to the dom, greatly improving maintainability.</p>
       <h2>Add module</h2>
       <p>Actually, the obvious pre-requisite is to have jQuery and theBeast.js:</p>
       <code>
@@ -52,8 +46,8 @@
   &nbsp;&nbsp;&lt;/script&gt;<br/>
       </code><br/>
       <button id="example-1">DO IT!</button> &lt; button with id=example-1
-      <div data-theBeast="fadeIn">This is the div that fades in and out!</div>
-      <div data-theBeast="fadeIn">This is another div that fades in and out!</div>
+      <div data-theBeast="fadeIn" class="rect">This is the div that fades in and out!</div>
+      <div data-theBeast="fadeIn" class="rect">This is another div that fades in and out!</div>
       <p>Now, let's look at the code and see that the DIVs have an attribute data-theBeast="fadeIn":</p>
       <code>
 &lt;div data-theBeast=&quot;fadeIn&quot;&gt;This is the div that fades in and out!&lt;/div&gt;<br/>

@@ -5,27 +5,17 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.min.js"></script>
     <script src="theBeast.js" type="text/javascript"></script>
     <script src="theBeast.history.js" type="text/javascript"></script>
-    <style>
-      body { background-color: #ddd; color: #222; font-family: Arial; padding: 0; margin: 0; }
-      #content { padding: 20px; }
-      h1 { color: #ccff77; background-color: #222222; padding: 20px; margin: 0; }
-      h2, h3 { color: #308; }
-      a { color: #004; }
-      #demo {overflow: hidden; }
-      #demo a {display: block; }
-      #demo>div {margin-top: 15px; padding: 15px; background-color: #fff; width: 150px;position: relative;}
-      #demo .square {position: absolute; top: 16px; left: 100px; width: 50px; height: 50px }
-      #demo>div { width: 136px; height: 52px; float: left; margin-left: 10px; }
-    </style>
+    <link media="screen" rel="stylesheet" href="site.css" type="text/css">
   </head>
   <body data-theBeast="history">
     <h1>theBeast example 5: the history module</h1>
+    <div class="download"><a href="theBeast.js">theBeast.js</a>&nbsp;|&nbsp;<a href="theBeast.min.js">theBeast.min.js</a>&nbsp;|&nbsp;<a href="theBeast.history.js">theBeast.history.js</a></div>
     <div id="content">
       <p>The first ready to use module. It uses HTML5 history and jQuery.load to allow the user to load parts of the web page and make it work together with the browser's history. This could typically be a simple js file. So what are the benefits to put it as a theBeast?</p>
       <ul>
         <li>You don't add any variable to the global namespace</li>
-        <li>You have the same stucture for every piece of javascript on your website</li>
-        <li>It uses theBeast pubsub, better than a simple callback</li>
+        <li>You have the same structure for every piece of javascript on your website</li>
+        <li>It uses the proprietary theBeast pubsub, better than a simple callback</li>
       </ul>
       <h2>History module basic usage and example</h2>
       <p>You might not even need to call this functions, if you want a link to only update a part of the page, just put the attribute <code>data-remote="<em>selector</em>"</code>, where <em>selector</em> can be any jQuery selector, like "#content" for instance.</p>

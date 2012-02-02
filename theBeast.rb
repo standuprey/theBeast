@@ -4,6 +4,10 @@ require 'sinatra'
 
 set :page_count, 5
 
+get '/intro' do
+  erb :intro
+end
+
 get '/' do
   erb :example1
 end
