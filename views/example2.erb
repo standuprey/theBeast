@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>theBeast - example 2</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.min.js"></script>
+    <script src="theBeast.js" type="text/javascript"></script>
+    <link media="screen" rel="stylesheet" href="site.css" type="text/css">
+    <script>
+      theBeast.add({
+        fadeIn1: function(){
+          console.log("loading fadein1 module");
+          $('[data-theBeast="fadeIn1"]').fadeInAndOut({fadeInDuration: 500});
+        },
+        fadeIn2: function(){
+          console.log("loading fadein2 module");
+          $('[data-theBeast="fadeIn2"]').fadeInAndOut();
+        }
+      });
+      (function($) {$.fn.fadeInAndOut = function(options){
+        var settings = $.extend({
+          fadeInDuration: 2000,
+          paudeDuration: 2000,
+          fadeOutDuration: 2000}, options);
+        var $element = $(this);
+        $element.hide();
+        return this.each(function() {
+          $("#example-1").click(function(){
+            $element.fadeIn(settings.fadeInDuration, function(){
+              var $this = $(this);
+              setTimeout(function(){$this.fadeOut(settings.fadeOutDuration)}, settings.pauseDuration)});
+          });
+        });
+      }})(jQuery)
+    </script>
+  </head>
+  <body>
+    <h1>theBeast example 2: working with jQuery plugins</h1>
+    <div class="download"><a href="theBeast.js">theBeast.js</a>&nbsp;|&nbsp;<a href="theBeast.min.js">theBeast.min.js</a></div>
+    <div id="content">
+      <p>So far we're having something very close to a jQuery plugin. At the same time less powerful, but clearer. Less powerful, because it does not seem very obvious to define a way to pass arguments, or options to the module you want to call.</p>
+      <p>That's because theBeast modules and jQuery plugins are complementary. The main problem with jQuery plugins is that when you start to have a complex page, you start to ask yourself where is the right place to initialize your plugin. theBeast offers a clean and easy way to answer this question</p>
+      <h2>A dummy jQuery plugin</h2>
+      <p>Let's take the same example as previously, but we'll make it a jQuery plugin with some options:</p>
+      <code>
+  (function($) {$.fn.<strong>fadeInAndOut</strong> = function(options){<br/>
+  &nbsp;var settings = $.extend({<br/>
+  &nbsp;&nbsp;fadeInDuration: 2000,<br/>
+  &nbsp;&nbsp;paudeDuration: 2000,<br/>
+  &nbsp;&nbsp;fadeOutDuration: 2000}, options);<br/>
+  &nbsp;var $element = $(this);<br/>
+  &nbsp;return this.each(function() {<br/>
+  &nbsp;&nbsp;$(&quot;#example-1&quot;).click(function(){<br/>
+  &nbsp;&nbsp;&nbsp;$element.fadeIn(settings.fadeInDuration, function(){<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;var $this = $(this);<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;setTimeout(function(){$this.fadeOut(settings.fadeOutDuration)}, settings.pauseDuration)});<br/>
+  &nbsp;&nbsp;});<br/>
+  &nbsp;});<br/>
+  }})(jQuery)<br/>
+      </code><br/>
+      <p>Now we declare 2 modules "fadeIn1" and "fadeIn2" that call the plugin with different options. We could also have had only 1 module, and add some attributes that we would use to call the plugin with options (like data-fadeInDuration, data-pauseDuration, data-fadeoutDuration). But we may end up with a clearer code, if we simply declare more, smaller modules:</p>
+      <code>
+  theBeast.add({<br/>
+  &nbsp;<strong>fadeIn1</strong>: function(){<br/>
+  &nbsp;&nbsp;console.log(&quot;loading fadein1 module&quot;);<br/>
+  &nbsp;&nbsp;$(&#39;[data-theBeast=&quot;fadeIn1&quot;]&#39;).fadeInAndOut({fadeInDuration: 500});<br/>
+  &nbsp;},<br/>
+  &nbsp;<strong>fadeIn2</strong>: function(){<br/>
+  &nbsp;&nbsp;console.log(&quot;loading fadein2 module&quot;);<br/>
+  &nbsp;&nbsp;$(&#39;[data-theBeast=&quot;fadeIn2&quot;]&#39;).fadeInAndOut();<br/>
+  &nbsp;}<br/>
+  });<br/>
+      </code><br/>
+      <button id="example-1">DO IT!</button><br/>
+      <div data-theBeast="fadeIn1" class="rect">This is the div that fades in and out!</div>
+      <div data-theBeast="fadeIn2" class="rect">This is another div that fades in and out!</div>
+      <a href="/">&lt;&lt; previous</a>&nbsp;
+      <% (1..settings.page_count).each do |page_number| %><a href="/example<%= page_number %>"><%= page_number %></a>&nbsp;<% end %>
+      <a href="/example3">next &gt;&gt;</a>
+    </div>
+  </body>
+</html>
